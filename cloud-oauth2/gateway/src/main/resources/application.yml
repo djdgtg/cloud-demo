@@ -1,0 +1,52 @@
+server:
+  port: 80
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/cloud-demo?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8
+    username: root
+    password: root
+  application:
+    name: cloud-gateway
+  cloud:
+    nacos:
+      server-addr: localhost:8848
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: auth
+          uri: lb://oauth2-auth
+          predicates:
+            - Path=/auth/**
+          filters:
+            - StripPrefix=1
+        - id: api
+          uri: lb://oauth2-api
+          predicates:
+            - Path=/api/**
+          filters:
+            - StripPrefix=1
+        - id: system
+          uri: lb://oauth2-system
+          predicates:
+            - Path=/system/**
+          filters:
+            - StripPrefix=1
+        - id: examtool
+          uri: lb://oauth2-examtool
+          predicates:
+            - Path=/examtool/**
+          filters:
+            - StripPrefix=1
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: http://localhost:90/rsa/publicKey #配置RSA的公钥访问地址
+
+logging:
+  level:
+    com.spring.cloud.oauth2.gateway.mapper: debug

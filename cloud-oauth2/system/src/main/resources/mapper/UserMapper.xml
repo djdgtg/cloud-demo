@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.cloud.oauth2.system.mapper.UserMapper">
+
+    <sql id="pageQuery">
+        SELECT u.*,
+        group_concat(distinct r.id) roleIds,
+        group_concat(distinct r.name) roleNames
+        FROM user u
+        LEFT JOIN user_role ur ON ur.user_id = u.id
+        LEFT JOIN role r ON r.id = ur.role_id
+        WHERE 1 = 1
+        <if test="query.username != null and query.username !=''">
+            AND u.username = #{query.username}
+        </if>
+        <if test="query.name != null and query.name !=''">
+            AND u.name = #{query.name}
+        </if>
+        <if test="query.enabled != null">
+            AND u.enabled = #{query.enabled}
+        </if>
+        <if test="query.ids != null and query.ids.size>0">
+            AND r.id in
+            <foreach collection="query.ids" index="index" item="id" open="(" separator="," close=")">
+                #{id}
+            </foreach>
+        </if>
+        GROUP BY u.id
+    </sql>
+
+    <select id="getPage" resultType="com.spring.cloud.oauth2.system.vo.UserVO">
+        <include refid="pageQuery"/>
+    </select>
+
+    <select id="getList" resultType="com.spring.cloud.oauth2.system.vo.UserVO">
+        <include refid="pageQuery"/>
+    </select>
+
+    <insert id="importBatch">
+        INSERT INTO t_user(username, password, name, enabled) VALUES
+        <foreach collection="list" item="user" index="index" separator=",">
+            (#{user.username},
+            #{user.password},
+            #{user.name},
+            #{user.enabled})
+        </foreach>
+    </insert>
+
+</mapper>

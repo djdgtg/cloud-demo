@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.cloud.oauth2.system.mapper.ResourceMapper">
+
+    <select id="getPage" resultType="com.spring.cloud.oauth2.system.vo.ResourceVO">
+        SELECT
+        r.*,
+        group_concat(distinct a.id) authorityIds,
+        group_concat(distinct a.name) authorityNames
+        FROM
+        resource r
+        LEFT JOIN resource_authority ra ON ra.resource_id = r.id
+        LEFT JOIN authority a ON a.id = ra.authority_id
+        WHERE
+        1 = 1
+        <if test="resourceVO.resourceName != null and resourceVO.resourceName !=''">
+            AND r.resource_name = #{resourceVO.resourceName}
+        </if>
+        <if test="resourceVO.url != null and resourceVO.url !=''">
+            AND r.url = #{resourceVO.url}
+        </if>
+        <if test="resourceVO.method != null and resourceVO.method !=''">
+            AND r.method = #{resourceVO.method}
+        </if>
+        <if test="resourceVO.permitAll != null">
+            AND r.permit_all = #{resourceVO.permitAll}
+        </if>
+        <if test="resourceVO.ids != null and resourceVO.ids.size>0">
+            AND a.id in
+            <foreach collection="resourceVO.ids" index="index" item="id" open="(" separator="," close=")">
+                #{id}
+            </foreach>
+        </if>
+        GROUP BY r.id
+    </select>
+
+</mapper>

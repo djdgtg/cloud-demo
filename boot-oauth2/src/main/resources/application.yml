@@ -1,0 +1,16 @@
+server:
+  port: 84
+
+spring:
+  application:
+    name: boot-oauth2
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/cloud-demo?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8
+    username: root
+    password: root
+
+
+logging:
+  level:
+    com.spring.cloud.oauth2.mapper: debug

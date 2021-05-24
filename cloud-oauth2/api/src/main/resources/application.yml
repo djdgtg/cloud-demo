@@ -1,0 +1,9 @@
+server:
+  port: 81
+spring:
+  application:
+    name: oauth2-api
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848

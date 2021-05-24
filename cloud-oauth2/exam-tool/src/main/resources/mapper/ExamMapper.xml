@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.cloud.oauth2.examtool.mapper.ExamMapper">
+
+    <sql id="pageQuery">
+        SELECT
+        e.*,
+        s.school_name,
+        count(st.id) attend_number
+        FROM
+        exam e
+        LEFT JOIN school s ON e.school_code = s.school_code
+        LEFT JOIN student st ON e.exam_code = st.exam_code
+        WHERE
+        1 = 1
+        <if test="query.examName != null and query.examName !=''">
+            AND e.exam_name = #{query.examName}
+        </if>
+        <if test="query.examCode != null and query.examCode !=''">
+            AND e.exam_code = #{query.examCode}
+        </if>
+        <if test="query.duration != null">
+            AND e.duration = #{query.duration}
+        </if>
+        <if test="query.schoolCode != null and query.schoolCode !=''">
+            AND e.school_code = #{query.schoolCode}
+        </if>
+        GROUP BY e.id
+    </sql>
+
+    <select id="page" resultType="com.spring.cloud.oauth2.examtool.vo.ExamVO">
+        <include refid="pageQuery"/>
+    </select>
+
+    <select id="list" resultType="com.spring.cloud.oauth2.examtool.vo.ExamVO">
+        <include refid="pageQuery"/>
+    </select>
+
+    <insert id="saveBatch">
+        INSERT INTO exam(exam_name, exam_code, school_code, start_time, end_time, duration) VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.examName},
+            #{item.examCode},
+            #{item.schoolCode},
+            #{item.startTime},
+            #{item.endTime},
+            #{item.duration})
+        </foreach>
+    </insert>
+
+</mapper>

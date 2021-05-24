@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.cloud.oauth2.mapper.UserMapper">
+
+    <select id="getUserAuthorities" resultType="java.lang.String">
+        SELECT DISTINCT a.authority_name
+        FROM user u
+        LEFT JOIN user_role ur ON ur.user_id = u.id
+        LEFT JOIN role r ON r.id = ur.role_id
+        LEFT JOIN role_authority ra ON ra.role_id = r.id
+        LEFT JOIN authority a ON a.id = ra.authority_id
+        WHERE a.authority_name IS NOT NULL
+        <if test="userId != null">
+            AND u.id = #{userId}
+        </if>
+    </select>
+
+</mapper>
