@@ -10,7 +10,12 @@ spring:
     username: root
     password: root
 
-
 logging:
   level:
     com.spring.cloud.oauth2.mapper: debug
+
+# MinIo文件服务器
+minio:
+  endpoint: http://localhost:9000
+  accessKey: minioadmin
+  secretKey: minioadmin

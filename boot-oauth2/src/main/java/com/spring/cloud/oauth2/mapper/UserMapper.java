@@ -1,9 +1,14 @@
 package com.spring.cloud.oauth2.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.spring.cloud.oauth2.entity.UserEntity;
+import com.spring.cloud.oauth2.vo.UserImportVO;
+import com.spring.cloud.oauth2.vo.UserVO;
+import com.spring.cloud.web.bean.PageVO;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * description UserMapper
@@ -13,13 +18,12 @@ import java.util.List;
  */
 public interface UserMapper extends BaseMapper<UserEntity> {
 
-    /**
-     * Description 根据用户id获取其权限
-     * 
-     * @param userId 
-     * @author qinchao 
-     * @date 2021/4/22 15:20
-     * @return java.util.List<java.lang.String>
-     */
     List<String> getUserAuthorities(Integer userId);
+
+    Page<UserVO> getPage(PageVO<UserVO> pageVO);
+
+    List<UserVO> getList(Map<String,Object> query);
+
+    void importBatch(List<UserImportVO> list);
+
 }

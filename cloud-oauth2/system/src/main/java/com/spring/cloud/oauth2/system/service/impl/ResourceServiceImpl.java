@@ -38,15 +38,15 @@ public class ResourceServiceImpl implements ResourceService {
              resourceMapper.insert(resourceVO);
         } else {
             resourceMapper.updateById(resourceVO);
+
+            LambdaQueryWrapper<ResourceAuthorityEntity> wrapper = new LambdaQueryWrapper<>();
+            wrapper.eq(ResourceAuthorityEntity::getResourceId, resourceVO.getId());
+            resourceAuthorityMapper.delete(wrapper);
         }
 
         List<Integer> ids = resourceVO.getIds();
         if (!CollectionUtils.isEmpty(ids)) {
             Integer id = resourceVO.getId();
-            LambdaQueryWrapper<ResourceAuthorityEntity> wrapper = new LambdaQueryWrapper<>();
-            wrapper.eq(ResourceAuthorityEntity::getResourceId, id);
-            resourceAuthorityMapper.delete(wrapper);
-
             for (Integer authorityIdId : ids) {
                 ResourceAuthorityEntity entity = new ResourceAuthorityEntity();
                 entity.setResourceId(id);

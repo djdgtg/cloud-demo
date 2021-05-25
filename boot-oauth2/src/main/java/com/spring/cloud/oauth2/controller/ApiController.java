@@ -18,4 +18,9 @@ public class ApiController {
         return api;
     }
 
+    @GetMapping("page/{page}")
+    public String page(@PathVariable String page) {
+        return page;
+    }
+
 }

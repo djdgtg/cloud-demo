@@ -36,7 +36,7 @@ public class Exam implements Serializable {
     private LocalDateTime endTime;
 
     @ExcelProperty(value = "考试时长", index = 7)
-    private Integer duration;
+    private Long duration;
 
     private static final long serialVersionUID = 1L;
 }

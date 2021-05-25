@@ -31,8 +31,6 @@ import java.util.Map;
 @Service
 public class UserServiceImpl implements UserService {
 
-    private static String ROLE_SCHOOL = "school";
-
     @Autowired
     private UserMapper userMapper;
 
@@ -49,15 +47,15 @@ public class UserServiceImpl implements UserService {
             userMapper.insert(userVO);
         } else {
             userMapper.updateById(userVO);
+            //先删除，后新增
+            LambdaQueryWrapper<UserRoleEntity> wrapper = new LambdaQueryWrapper<>();
+            wrapper.eq(UserRoleEntity::getUserId, userVO.getId());
+            userRoleMapper.delete(wrapper);
         }
+
         List<Integer> ids = userVO.getIds();
         if (!CollectionUtils.isEmpty(ids)) {
             Integer id = userVO.getId();
-            //先删除，后新增
-            LambdaQueryWrapper<UserRoleEntity> wrapper = new LambdaQueryWrapper<>();
-            wrapper.eq(UserRoleEntity::getUserId, id);
-            userRoleMapper.delete(wrapper);
-
             for (Integer roleId : ids) {
                 UserRoleEntity entity = new UserRoleEntity();
                 entity.setUserId(id);

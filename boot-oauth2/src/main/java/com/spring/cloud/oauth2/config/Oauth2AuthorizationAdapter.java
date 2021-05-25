@@ -1,6 +1,6 @@
 package com.spring.cloud.oauth2.config;
 
-import com.spring.cloud.oauth2.service.UserServiceImpl;
+import com.spring.cloud.oauth2.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;

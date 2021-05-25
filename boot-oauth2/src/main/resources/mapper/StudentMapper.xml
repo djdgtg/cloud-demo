@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.cloud.oauth2.mapper.StudentMapper">
+
+    <sql id="pageQuery">
+        SELECT
+        s.*,
+        e.exam_name,
+        sc.school_name,
+        et.error_name
+        FROM
+        student s
+        LEFT JOIN exam e ON e.exam_code = s.exam_code AND e.school_code = s.school_code
+        LEFT JOIN school sc ON sc.school_code = e.school_code
+        LEFT JOIN error_type et ON et.id = s.error_type
+        WHERE
+        1 = 1
+        <if test="query.studentName != null and query.studentName !=''">
+            AND s.student_name = #{query.studentName}
+        </if>
+        <if test="query.identityNumber != null and query.identityNumber !=''">
+            AND s.identity_number = #{query.identityNumber}
+        </if>
+        <if test="query.ticketNumber != null and query.studentName !=''">
+            AND s.ticket_number = #{query.ticketNumber}
+        </if>
+        <if test="query.siteNumber != null and query.siteNumber !=''">
+            AND s.site_number = #{query.siteNumber}
+        </if>
+        <if test="query.schoolCode != null and query.schoolCode !=''">
+            AND sc.school_code = #{query.schoolCode}
+        </if>
+        <if test="query.examCode != null and query.examCode !=''">
+            AND s.exam_code = #{query.examCode}
+        </if>
+        <if test="query.errorType != null">
+            AND s.error_type = #{query.errorType}
+        </if>
+        <if test="query.disciplineCode != null and query.disciplineCode !=''">
+            AND s.discipline_code = #{query.disciplineCode}
+        </if>
+        <if test="query.remark != null and query.remark !=''">
+            AND s.remark = #{query.remark}
+        </if>
+    </sql>
+
+    <select id="page" resultType="com.spring.cloud.oauth2.vo.StudentVO">
+        <include refid="pageQuery"/>
+    </select>
+
+    <select id="list" resultType="com.spring.cloud.oauth2.vo.StudentVO">
+        <include refid="pageQuery"/>
+    </select>
+
+    <insert id="saveBatch">
+        INSERT INTO student(student_name, school_code, exam_code, password,
+        identity_number, ticket_number, site_number)VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.studentName},
+            #{item.schoolCode},
+            #{item.examCode},
+            substring(MD5(RAND()),1,6),
+            #{item.identityNumber},
+            #{item.ticketNumber},
+            #{item.siteNumber})
+        </foreach>
+    </insert>
+
+    <select id="statistics" resultType="com.spring.cloud.oauth2.vo.StudentStatisticsVO">
+        SELECT
+        <if test="query.type != null and query.type == 1">
+            sc.school_name schoolName,e.exam_name examName,
+        </if>
+        <if test="query.type != null and query.type == 2">
+            sc.school_name schoolName,
+        </if>
+        count(1) attendNumber,
+        SUM(CASE WHEN s.error_type IS NOT NULL THEN 1 ELSE 0 END) AS totalErrorNumber,
+        SUM(CASE WHEN s.error_type = 1 THEN 1 ELSE 0 END) AS totalAbsentNumber,
+        SUM(CASE WHEN s.error_type = 2 THEN 1 ELSE 0 END) AS totalDisciplinaryNumber,
+        SUM(CASE WHEN s.error_type = 3 THEN 1 ELSE 0 END) AS totalExceptionNumber
+        FROM student s
+        LEFT JOIN exam e ON e.exam_code = s.exam_code AND s.school_code = e.school_code
+        LEFT JOIN school sc ON sc.school_code = e.school_code
+        LEFT JOIN error_type et ON et.id = s.error_type
+        WHERE 1 = 1
+        <if test="query.schoolCode != null and query.schoolCode !=''">
+            AND sc.school_code = #{query.schoolCode}
+        </if>
+        <if test="query.examCode != null and query.examCode !=''">
+            AND e.exam_code = #{query.examCode}
+        </if>
+        <if test="query.type != null and query.type == 1">
+            GROUP BY s.school_code, s.exam_code
+        </if>
+        <if test="query.type != null and query.type == 2">
+            GROUP BY s.school_code
+        </if>
+    </select>
+
+    <select id="info" resultType="com.spring.cloud.oauth2.vo.StudentVO">
+        SELECT s.*,
+               e.exam_name,
+               sc.school_name,
+               et.error_name
+        FROM student s
+                 LEFT JOIN exam e ON e.exam_code = s.exam_code AND e.school_code = s.school_code
+                 LEFT JOIN school sc ON sc.school_code = e.school_code
+                 LEFT JOIN error_type et ON et.id = s.error_type
+        WHERE 1 = 1
+          AND sc.school_code = #{schoolCode}
+          AND s.exam_code = #{examCode}
+          AND s.site_number = #{siteNumber}
+    </select>
+
+</mapper>

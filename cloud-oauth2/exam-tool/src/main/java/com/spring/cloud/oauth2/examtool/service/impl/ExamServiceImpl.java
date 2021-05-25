@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.time.Duration;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -48,6 +49,9 @@ public class ExamServiceImpl implements ExamService {
 
     @Override
     public void save(Exam exam) {
+        if (exam.getStartTime() != null && exam.getEndTime() != null) {
+            exam.setDuration(Duration.between(exam.getStartTime(), exam.getEndTime()).toMinutes());
+        }
         if (exam.getId() == null) {
             examMapper.insert(exam);
         } else {
@@ -91,4 +95,5 @@ public class ExamServiceImpl implements ExamService {
         }
         return examMapper.selectList(wrapper);
     }
+
 }

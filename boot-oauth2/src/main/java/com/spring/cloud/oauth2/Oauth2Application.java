@@ -10,7 +10,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @author qinchao 
  * @date 2021/5/21 17:07
  */
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = {"com.spring.cloud"})
 @MapperScan("com.spring.cloud.oauth2.mapper")
 public class Oauth2Application {
 

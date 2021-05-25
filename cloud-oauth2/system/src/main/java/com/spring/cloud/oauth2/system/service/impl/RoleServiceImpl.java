@@ -39,14 +39,15 @@ public class RoleServiceImpl implements RoleService {
             roleMapper.insert(roleVO);
         } else {
             roleMapper.updateById(roleVO);
+
+            LambdaQueryWrapper<RoleAuthorityEntity> wrapper = new LambdaQueryWrapper<>();
+            wrapper.eq(RoleAuthorityEntity::getRoleId, roleVO.getId());
+            roleAuthorityMapper.delete(wrapper);
         }
+
         List<Integer> ids = roleVO.getIds();
         if (!CollectionUtils.isEmpty(ids)) {
             Integer id = roleVO.getId();
-            LambdaQueryWrapper<RoleAuthorityEntity> wrapper = new LambdaQueryWrapper<>();
-            wrapper.eq(RoleAuthorityEntity::getRoleId, id);
-            roleAuthorityMapper.delete(wrapper);
-
             for (Integer authorityIdId : ids) {
                 RoleAuthorityEntity entity = new RoleAuthorityEntity();
                 entity.setRoleId(id);
