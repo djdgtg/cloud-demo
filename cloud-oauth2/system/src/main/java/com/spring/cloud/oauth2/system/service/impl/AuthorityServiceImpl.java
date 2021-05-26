@@ -44,7 +44,7 @@ public class AuthorityServiceImpl implements AuthorityService {
                 wrapper.eq(AuthorityEntity::getAuthorityName, query.getAuthorityName());
             }
             if (StringUtils.isNotBlank(query.getName())) {
-                wrapper.like(AuthorityEntity::getName, "%"+query.getName()+"%");
+                wrapper.like(AuthorityEntity::getName, "%" + query.getName() + "%");
             }
         }
         return authorityMapper.selectPage(pageVO, wrapper);

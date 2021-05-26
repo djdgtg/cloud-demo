@@ -5,9 +5,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
- * description 
- * 
- * @author qinchao 
+ * description
+ *
+ * @author qinchao
  * @date 2021/5/21 17:07
  */
 @SpringBootApplication(scanBasePackages = {"com.spring.cloud"})

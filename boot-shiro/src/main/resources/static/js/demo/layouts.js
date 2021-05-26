@@ -1,4 +1,3 @@
-
 // Layouts.js
 // ====================================================================
 // Set the color themes to this page.
@@ -7,27 +6,25 @@
 // - ThemeOn.net -
 
 
-
-$(document).ready(function() {
+$(document).ready(function () {
 
 
     // Applying a theme
     // ================================
-    changeTheme = function(themeName, type){
+    changeTheme = function (themeName, type) {
         var themeCSS = $('#theme'),
-            filename = 'css/themes/type-'+type+'/'+themeName+'.min.css';
+            filename = 'css/themes/type-' + type + '/' + themeName + '.min.css';
 
         if (themeCSS.length) {
             themeCSS.prop('href', filename);
-        }else{
-            themeCSS = '<link id="theme" href="'+filename+'" rel="stylesheet">';
+        } else {
+            themeCSS = '<link id="theme" href="' + filename + '" rel="stylesheet">';
             $('head').append(themeCSS);
         }
     };
 
 
-
-    if($.cookie('settings-theme-name') && $.cookie('settings-theme-type')){
+    if ($.cookie('settings-theme-name') && $.cookie('settings-theme-type')) {
         changeTheme($.cookie('settings-theme-name'), $.cookie('settings-theme-type'));
     }
 

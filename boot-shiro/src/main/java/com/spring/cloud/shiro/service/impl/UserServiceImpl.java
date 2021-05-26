@@ -47,8 +47,8 @@ public class UserServiceImpl implements UserService {
         if (list != null) {
             for (ResourceEntity entity : list) {
                 List<String> authorities = resourceMapper.getAccessAuthorities(entity.getId());
-                if (authorities!=null) {
-                    StringJoiner sj = new StringJoiner(",","perms[","]");
+                if (authorities != null) {
+                    StringJoiner sj = new StringJoiner(",", "perms[", "]");
                     for (String authority : authorities) {
                         sj.add(authority);
                     }

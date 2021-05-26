@@ -18,9 +18,9 @@ public interface ResourceMapper extends BaseMapper<ResourceEntity> {
      *
      * @param method 请求方式
      * @param url    url
+     * @return com.spring.cloud.gateway.entity.ResourceEntity
      * @author qinchao
      * @date 2021/4/28 14:30
-     * @return com.spring.cloud.gateway.entity.ResourceEntity
      */
     ResourceEntity getResourceEntity(String method, String url);
 
@@ -28,9 +28,9 @@ public interface ResourceMapper extends BaseMapper<ResourceEntity> {
      * Description 获取资源所能访问的权限
      *
      * @param resourceId
+     * @return java.util.List<java.lang.String>
      * @author qinchao
      * @date 2021/4/28 14:31
-     * @return java.util.List<java.lang.String>
      */
     List<String> getAccessAuthorities(Integer resourceId);
 

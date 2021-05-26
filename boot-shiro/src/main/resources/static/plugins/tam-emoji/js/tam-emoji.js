@@ -15,7 +15,7 @@
             var ui = $.summernote.ui;
             var icons = {};
             var reverseIcons = {};
-            var editorId = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+            var editorId = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
                 var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
                 return v.toString(16);
             });
@@ -47,12 +47,12 @@
 
             var addListener = function () {
                 var $body = $('body');
-                $body.on('keydown', function(e) {
+                $body.on('keydown', function (e) {
                     if (e.keyCode === KEY_ESC || e.keyCode === KEY_TAB) {
                         self.$panel.hide();
                     }
                 });
-                $body.on('mouseup', function(e) {
+                $body.on('mouseup', function (e) {
                     e = e.originalEvent || e;
                     var target = e.target || window;
                     if ($(target).hasClass('emoji-picker') || $(target).hasClass('emoji-menu-tab')) {
@@ -66,36 +66,36 @@
                     var index = 0;
                     var curclass = $(this).attr("class").split(' ');
                     curclass = curclass[1].split('-');
-                    if(curclass.length===3) return;
-                    curclass = curclass[0]+'-'+curclass[1];
-                    $('.' + editorId + ' .emoji-menu-tabs td').each(function(i){
+                    if (curclass.length === 3) return;
+                    curclass = curclass[0] + '-' + curclass[1];
+                    $('.' + editorId + ' .emoji-menu-tabs td').each(function (i) {
                         var $a = $(this).find('a');
                         var aclass = $a.attr("class").split(' ');
                         aclass = aclass[1].split('-');
-                        aclass = aclass[0]+'-'+aclass[1];
-                        if(curclass === aclass){
-                            $a.attr('class', 'emoji-menu-tab '+aclass+'-selected');
+                        aclass = aclass[0] + '-' + aclass[1];
+                        if (curclass === aclass) {
+                            $a.attr('class', 'emoji-menu-tab ' + aclass + '-selected');
                             index = i;
-                        }else{
-                            $a.attr('class', 'emoji-menu-tab '+aclass);
+                        } else {
+                            $a.attr('class', 'emoji-menu-tab ' + aclass);
                         }
                     });
                     updateEmojisList(index);
                 });
-                $(document).on('click', '.' + editorId + ' .emoji-items a', function(){
+                $(document).on('click', '.' + editorId + ' .emoji-items a', function () {
                     var emoji = $('.label', $(this)).text();
                     if (document.emojiType === 'unicode') {
                         context.invoke('editor.insertText', colonToUnicode(emoji));
                     } else {
                         var $img = $(createdEmojiIcon(self.icons[emoji]));
                         if ($img[0].attachEvent) {
-                            $img[0].attachEvent('onresizestart', function(e) {
+                            $img[0].attachEvent('onresizestart', function (e) {
                                 e.returnValue = false;
                             }, false);
                         }
                         context.invoke('editor.insertNode', $img[0]);
                     }
-                    ConfigStorage.get('emojis_recent', function(curEmojis) {
+                    ConfigStorage.get('emojis_recent', function (curEmojis) {
                         curEmojis = curEmojis || Config.defaultRecentEmojis || [];
                         var pos = curEmojis.indexOf(emoji);
                         if (!pos) {
@@ -109,7 +109,7 @@
                             curEmojis = curEmojis.slice(42);
                         }
                         ConfigStorage.set({
-                            emojis_recent : curEmojis
+                            emojis_recent: curEmojis
                         });
                     });
                 });
@@ -150,7 +150,7 @@
             var updateEmojisList = function (index) {
                 var $items = $('.' + editorId + ' .emoji-items');
                 $items.html('');
-                if(index > 0) {
+                if (index > 0) {
                     $.each(self.icons, function (key, icon) {
                         if (self.icons.hasOwnProperty(key)
                             && icon[0] === (index - 1)) {
@@ -161,8 +161,8 @@
                                 + '</span></a>');
                         }
                     });
-                }else{
-                    ConfigStorage.get('emojis_recent', function(curEmojis) {
+                } else {
+                    ConfigStorage.get('emojis_recent', function (curEmojis) {
                         curEmojis = curEmojis || Config.defaultRecentEmojis || [];
                         var key, i;
                         for (i = 0; i < curEmojis.length; i++) {
@@ -178,13 +178,13 @@
                     });
                 }
             };
-            var createdEmojiIcon = function(emoji){
+            var createdEmojiIcon = function (emoji) {
                 var category = emoji[0];
                 var row = emoji[1];
                 var column = emoji[2];
                 var name = emoji[3];
                 var filename = document.emojiSource + '/emoji_spritesheet_!.png';
-                var blankGifPath =document.emojiSource + '/blank.gif';
+                var blankGifPath = document.emojiSource + '/blank.gif';
                 var iconSize = 25;
                 var xoffset = -(iconSize * column);
                 var yoffset = -(iconSize * row);
@@ -201,8 +201,8 @@
                 return '<img src="' + blankGifPath + '" class="img" style="'
                     + style + '" alt="' + Config.htmlEntities(name) + '">';
             };
-            var colonToUnicode = function(emoij) {
-                return emoij.replace(Config.rx_colons, function(m) {
+            var colonToUnicode = function (emoij) {
+                return emoij.replace(Config.rx_colons, function (m) {
                     var val;
                     val = Config.mapcolon[m];
                     if (val) {
@@ -214,18 +214,18 @@
             };
 
             context.memo('button.emoji', function () {
-                if(document.emojiButton === undefined)
+                if (document.emojiButton === undefined)
                     document.emojiButton = 'fa fa-smile-o';
                 var button = ui.button({
                     contents: '<i class="' + document.emojiButton + ' emoji-picker-container emoji-picker"></i>',
                     click: function () {
-                        if(document.emojiSource === undefined)
+                        if (document.emojiSource === undefined)
                             document.emojiSource = '';
-                        if(document.emojiType === undefined)
+                        if (document.emojiType === undefined)
                             document.emojiType = '';
 
                         var width = self.$panel.width();
-                        if(width > self.$panel.position().left){
+                        if (width > self.$panel.position().left) {
                             self.$panel.css({left: '0', top: '100%'});
                         }
 
@@ -264,7 +264,7 @@
                     '</div>').hide();
                 if (typeof this.emoji !== 'undefined') {
                     this.$panel.appendTo(this.emoji.parent());
-                   loadEmojis();
+                    loadEmojis();
                     updateEmojisList(0);
                 }
             };

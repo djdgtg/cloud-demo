@@ -47,6 +47,7 @@ public class ExcelUtils {
                 public void invoke(T object, AnalysisContext analysisContext) {
                     list.add(object);
                 }
+
                 @Override
                 public void doAfterAllAnalysed(AnalysisContext analysisContext) {
                     //可以加一些判断如果list过长，抛出异常
@@ -85,8 +86,8 @@ public class ExcelUtils {
             response.setContentType("application/vnd.ms-excel;charset=utf-8");
             response.setHeader("Content-Disposition", "attachment; filename=" + fileName);
             out = response.getOutputStream();
-            if (in != null){
-                IOUtils.copy(in,out);
+            if (in != null) {
+                IOUtils.copy(in, out);
             }
             out.flush();
         } catch (IOException e) {

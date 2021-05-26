@@ -1,4 +1,3 @@
-
 // Dashboard.js
 // ====================================================================
 // This file should not be included in your project.
@@ -7,8 +6,7 @@
 // - ThemeOn.net -
 
 
-$(window).on('load', function() {
-
+$(window).on('load', function () {
 
 
     // Network chart ( Morris Line Chart )
@@ -19,54 +17,54 @@ $(window).on('load', function() {
     // =================================================================
 
     var day_data = [
-        {"elapsed": "Oct-12", "value": 24, b:2},
-        {"elapsed": "Oct-13", "value": 34, b:22},
-        {"elapsed": "Oct-14", "value": 33, b:7},
-        {"elapsed": "Oct-15", "value": 22, b:6},
-        {"elapsed": "Oct-16", "value": 28, b:17},
-        {"elapsed": "Oct-17", "value": 60, b:15},
-        {"elapsed": "Oct-18", "value": 60, b:17},
-        {"elapsed": "Oct-19", "value": 70, b:7},
-        {"elapsed": "Oct-20", "value": 67, b:18},
+        {"elapsed": "Oct-12", "value": 24, b: 2},
+        {"elapsed": "Oct-13", "value": 34, b: 22},
+        {"elapsed": "Oct-14", "value": 33, b: 7},
+        {"elapsed": "Oct-15", "value": 22, b: 6},
+        {"elapsed": "Oct-16", "value": 28, b: 17},
+        {"elapsed": "Oct-17", "value": 60, b: 15},
+        {"elapsed": "Oct-18", "value": 60, b: 17},
+        {"elapsed": "Oct-19", "value": 70, b: 7},
+        {"elapsed": "Oct-20", "value": 67, b: 18},
         {"elapsed": "Oct-21", "value": 86, b: 18},
         {"elapsed": "Oct-22", "value": 86, b: 18},
         {"elapsed": "Oct-23", "value": 113, b: 29},
         {"elapsed": "Oct-24", "value": 130, b: 23},
-        {"elapsed": "Oct-25", "value": 114, b:10},
-        {"elapsed": "Oct-26", "value": 80, b:22},
-        {"elapsed": "Oct-27", "value": 109, b:7},
-        {"elapsed": "Oct-28", "value": 100, b:6},
-        {"elapsed": "Oct-29", "value": 105, b:17},
-        {"elapsed": "Oct-30", "value": 110, b:15},
-        {"elapsed": "Oct-31", "value": 102, b:17},
-        {"elapsed": "Nov-01", "value": 107, b:7},
-        {"elapsed": "Nov-02", "value": 60, b:18},
+        {"elapsed": "Oct-25", "value": 114, b: 10},
+        {"elapsed": "Oct-26", "value": 80, b: 22},
+        {"elapsed": "Oct-27", "value": 109, b: 7},
+        {"elapsed": "Oct-28", "value": 100, b: 6},
+        {"elapsed": "Oct-29", "value": 105, b: 17},
+        {"elapsed": "Oct-30", "value": 110, b: 15},
+        {"elapsed": "Oct-31", "value": 102, b: 17},
+        {"elapsed": "Nov-01", "value": 107, b: 7},
+        {"elapsed": "Nov-02", "value": 60, b: 18},
         {"elapsed": "Nov-03", "value": 67, b: 18},
         {"elapsed": "Nov-04", "value": 76, b: 18},
         {"elapsed": "Nov-05", "value": 73, b: 29},
         {"elapsed": "Nov-06", "value": 94, b: 13},
-        {"elapsed": "Nov-07", "value": 135, b:2},
-        {"elapsed": "Nov-08", "value": 154, b:22},
-        {"elapsed": "Nov-09", "value": 120, b:7},
-        {"elapsed": "Nov-10", "value": 100, b:6},
-        {"elapsed": "Nov-11", "value": 130, b:17},
-        {"elapsed": "Nov-12", "value": 100, b:15},
-        {"elapsed": "Nov-13", "value": 60, b:17},
-        {"elapsed": "Nov-14", "value": 70, b:7},
-        {"elapsed": "Nov-15", "value": 67, b:18},
+        {"elapsed": "Nov-07", "value": 135, b: 2},
+        {"elapsed": "Nov-08", "value": 154, b: 22},
+        {"elapsed": "Nov-09", "value": 120, b: 7},
+        {"elapsed": "Nov-10", "value": 100, b: 6},
+        {"elapsed": "Nov-11", "value": 130, b: 17},
+        {"elapsed": "Nov-12", "value": 100, b: 15},
+        {"elapsed": "Nov-13", "value": 60, b: 17},
+        {"elapsed": "Nov-14", "value": 70, b: 7},
+        {"elapsed": "Nov-15", "value": 67, b: 18},
         {"elapsed": "Nov-16", "value": 86, b: 18},
         {"elapsed": "Nov-17", "value": 86, b: 18},
         {"elapsed": "Nov-18", "value": 113, b: 29},
         {"elapsed": "Nov-19", "value": 130, b: 23},
-        {"elapsed": "Nov-20", "value": 114, b:10},
-        {"elapsed": "Nov-21", "value": 80, b:22},
-        {"elapsed": "Nov-22", "value": 109, b:7},
-        {"elapsed": "Nov-23", "value": 100, b:6},
-        {"elapsed": "Nov-24", "value": 105, b:17},
-        {"elapsed": "Nov-25", "value": 110, b:15},
-        {"elapsed": "Nov-26", "value": 102, b:17},
-        {"elapsed": "Nov-27", "value": 107, b:7},
-        {"elapsed": "Nov-28", "value": 60, b:18},
+        {"elapsed": "Nov-20", "value": 114, b: 10},
+        {"elapsed": "Nov-21", "value": 80, b: 22},
+        {"elapsed": "Nov-22", "value": 109, b: 7},
+        {"elapsed": "Nov-23", "value": 100, b: 6},
+        {"elapsed": "Nov-24", "value": 105, b: 17},
+        {"elapsed": "Nov-25", "value": 110, b: 15},
+        {"elapsed": "Nov-26", "value": 102, b: 17},
+        {"elapsed": "Nov-27", "value": 107, b: 7},
+        {"elapsed": "Nov-28", "value": 60, b: 18},
         {"elapsed": "Nov-29", "value": 67, b: 18},
         {"elapsed": "Nov-30", "value": 76, b: 18},
         {"elapsed": "Des-01", "value": 73, b: 29},
@@ -77,25 +75,25 @@ $(window).on('load', function() {
     var chart = Morris.Area({
         element: 'morris-chart-network',
         data: day_data,
-        axes:false,
+        axes: false,
         xkey: 'elapsed',
         ykeys: ['value', 'b'],
         labels: ['Download Speed', 'Upload Speed'],
-        yLabelFormat :function (y) { return y.toString() + ' Mb/s'; },
+        yLabelFormat: function (y) {
+            return y.toString() + ' Mb/s';
+        },
         gridEnabled: false,
         gridLineColor: 'transparent',
-        lineColors: ['#7db8d8','#3b7093'],
-        lineWidth:[0,0],
-        pointSize:[0,0],
-        fillOpacity:1,
-        gridTextColor:'#999',
+        lineColors: ['#7db8d8', '#3b7093'],
+        lineWidth: [0, 0],
+        pointSize: [0, 0],
+        fillOpacity: 1,
+        gridTextColor: '#999',
         parseTime: false,
-        resize:true,
-        behaveLikeLine : true,
+        resize: true,
+        behaveLikeLine: true,
         hideHover: 'auto'
     });
-
-
 
 
     // EXTRA SMALL WEATHER WIDGET
@@ -117,36 +115,31 @@ $(window).on('load', function() {
     skycons.play();
 
 
-
-
-
     // HDD USAGE - SPARKLINE LINE AREA CHART
     // =================================================================
     // Require sparkline
     // -----------------------------------------------------------------
     // http://omnipotent.net/jquery.sparkline/#s-about
     // =================================================================
-    var hddSparkline = function() {
-        $("#demo-sparkline-area").sparkline([57,69,70,62,73,79,76,77,73,52,57,50,60,55,70,68], {
+    var hddSparkline = function () {
+        $("#demo-sparkline-area").sparkline([57, 69, 70, 62, 73, 79, 76, 77, 73, 52, 57, 50, 60, 55, 70, 68], {
             type: 'line',
             width: '100%',
             height: '40',
             spotRadius: 5,
             lineWidth: 2,
-            lineColor:'rgba(255,255,255,.85)',
+            lineColor: 'rgba(255,255,255,.85)',
             fillColor: 'rgba(0,0,0,0.03)',
             spotColor: 'rgba(255,255,255,.5)',
             minSpotColor: 'rgba(255,255,255,.5)',
             maxSpotColor: 'rgba(255,255,255,.5)',
-            highlightLineColor : '#ffffff',
+            highlightLineColor: '#ffffff',
             highlightSpotColor: '#ffffff',
             tooltipChartTitle: 'Usage',
-            tooltipSuffix:' %'
+            tooltipSuffix: ' %'
 
         });
     }
-
-
 
 
     // EARNING - SPARKLINE LINE CHART
@@ -155,28 +148,27 @@ $(window).on('load', function() {
     // -----------------------------------------------------------------
     // http://omnipotent.net/jquery.sparkline/#s-about
     // =================================================================
-    var earningSparkline = function(){
-        $("#demo-sparkline-line").sparkline([345,404,305,455,378,567,586,685,458,742,565], {
+    var earningSparkline = function () {
+        $("#demo-sparkline-line").sparkline([345, 404, 305, 455, 378, 567, 586, 685, 458, 742, 565], {
             type: 'line',
             width: '100%',
             height: '40',
             spotRadius: 2,
-            lineWidth:2,
-            lineColor:'#ffffff',
+            lineWidth: 2,
+            lineColor: '#ffffff',
             fillColor: false,
-            minSpotColor :false,
-            maxSpotColor : false,
-            highlightLineColor : '#ffffff',
+            minSpotColor: false,
+            maxSpotColor: false,
+            highlightLineColor: '#ffffff',
             highlightSpotColor: '#ffffff',
             tooltipChartTitle: 'Earning',
-            tooltipPrefix :'$ ',
-            spotColor:'#ffffff',
-            valueSpots : {
+            tooltipPrefix: '$ ',
+            spotColor: '#ffffff',
+            valueSpots: {
                 '0:': '#ffffff'
             }
         });
     }
-
 
 
     // SALES - SPARKLINE BAR CHART
@@ -187,14 +179,14 @@ $(window).on('load', function() {
     // =================================================================
 
     var barEl = $("#demo-sparkline-bar");
-    var barValues = [40,32,65,53,62,55,24,67,45,70,45,56,34,67,76,32,65,53,62,55,24,67,45,70,45,56,70,45,56,34,67,76,32,65,53,62,55];
+    var barValues = [40, 32, 65, 53, 62, 55, 24, 67, 45, 70, 45, 56, 34, 67, 76, 32, 65, 53, 62, 55, 24, 67, 45, 70, 45, 56, 70, 45, 56, 34, 67, 76, 32, 65, 53, 62, 55];
     var barValueCount = barValues.length;
     var barSpacing = 1;
-    var salesSparkline = function(){
-         barEl.sparkline(barValues, {
+    var salesSparkline = function () {
+        barEl.sparkline(barValues, {
             type: 'bar',
             height: 55,
-            barWidth: Math.round((barEl.parent().width() - ( barValueCount - 1 ) * barSpacing ) / barValueCount),
+            barWidth: Math.round((barEl.parent().width() - (barValueCount - 1) * barSpacing) / barValueCount),
             barSpacing: barSpacing,
             zeroAxis: false,
             tooltipChartTitle: 'Daily Sales',
@@ -204,7 +196,7 @@ $(window).on('load', function() {
     }
 
 
-    nifty.window.on('resizeEnd', function(){
+    nifty.window.on('resizeEnd', function () {
         hddSparkline();
         earningSparkline();
         salesSparkline();
@@ -214,32 +206,23 @@ $(window).on('load', function() {
     salesSparkline();
 
 
-
-
-
     // PANEL OVERLAY
     // =================================================================
     // Require Nifty js
     // -----------------------------------------------------------------
     // http://www.themeon.net
     // =================================================================
-    $('#demo-panel-network-refresh').niftyOverlay().on('click', function(){
+    $('#demo-panel-network-refresh').niftyOverlay().on('click', function () {
         var $el = $(this), relTime;
 
         $el.niftyOverlay('show');
 
 
-        relTime = setInterval(function(){
+        relTime = setInterval(function () {
             $el.niftyOverlay('hide');
             clearInterval(relTime);
-        },2000);
+        }, 2000);
     });
-
-
-
-
-
-
 
 
     // WEATHER WIDGET
@@ -256,13 +239,12 @@ $(window).on('load', function() {
     }
     /* Main Icon */
     var skycons = new Skycons(
-    {
-        color : '#fff',
-        resizeClear : true
-    });
+        {
+            color: '#fff',
+            resizeClear: true
+        });
     skycons.add("demo-weather-md-icon-1", Skycons.PARTLY_CLOUDY_DAY);
     skycons.play();
-
 
 
     /* Small Icons*/
@@ -271,11 +253,9 @@ $(window).on('load', function() {
     skycons2.play();
 
 
-
     var skycons3 = new Skycons(skyconsOptions);
     skycons3.add("demo-weather-md-icon-3", Skycons.WIND);
     skycons3.play();
-
 
 
     var skycons4 = new Skycons(skyconsOptions);
@@ -283,18 +263,16 @@ $(window).on('load', function() {
     skycons4.play();
 
 
-
     var skycons5 = new Skycons(skyconsOptions);
     skycons5.add("demo-weather-md-icon-5", Skycons.PARTLY_CLOUDY_DAY);
     skycons5.play();
-
 
 
     // WELCOME NOTIFICATIONS
     // =================================================================
     // Require Admin Core Javascript
     // =================================================================
-     var fvisit  = setTimeout(function(){
+    var fvisit = setTimeout(function () {
         $.niftyNoty({
             type: 'dark',
             title: 'Hello Admin,',
@@ -303,6 +281,6 @@ $(window).on('load', function() {
             timer: 5500
         });
         clearTimeout(fvisit);
-     }, 3000);
+    }, 3000);
 
 });

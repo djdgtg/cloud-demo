@@ -20,10 +20,10 @@ public class Result implements Serializable {
 
     private String message;
 
-    public Result(){
+    public Result() {
     }
 
-    public Result(Integer code,String message){
+    public Result(Integer code, String message) {
         this.code = code;
         this.message = message;
     }

@@ -11,20 +11,20 @@ import org.springframework.stereotype.Component;
 import java.util.Collection;
 
 /**
- * description 
+ * description
  *
- * @author qinchao 
+ * @author qinchao
  * @date 2021/5/24 9:48
  */
 @Component
 public class MyAccessDecisionManager implements AccessDecisionManager {
     @Override
     public void decide(Authentication authentication, Object o, Collection<ConfigAttribute> collection) throws AccessDeniedException, InsufficientAuthenticationException {
-        for (ConfigAttribute attribute:collection) {
+        for (ConfigAttribute attribute : collection) {
             //获取当前登录用户的角色
             Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
-            for (GrantedAuthority authority:authorities) {
-                if(authority.getAuthority().equals(attribute.getAttribute())) {
+            for (GrantedAuthority authority : authorities) {
+                if (authority.getAuthority().equals(attribute.getAttribute())) {
                     //当前登录用户具备所需的角色 则无需判断
                     return;
                 }

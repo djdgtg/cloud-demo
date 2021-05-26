@@ -18,13 +18,17 @@ public class GlobalExceptionHandler {
     @ExceptionHandler({RuntimeException.class, Exception.class})
     public ResponseEntity<Result> exception(Exception e) {
         log.error(e.getMessage(), e);
-        return new ResponseEntity<>(new Result(HttpStatus.BAD_REQUEST.value(),e.getMessage()), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(new Result(HttpStatus.BAD_REQUEST.value(), e.getMessage()), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(StatusException.class)
     public ResponseEntity<Result> status(StatusException e) {
         log.error(e.getMessage(), e);
-        return new ResponseEntity<>(new Result(e.getStatus() ,e.getMessage()), HttpStatus.BAD_REQUEST);
+        HttpStatus httpStatus = HttpStatus.BAD_REQUEST;
+        if (e.getStatus() != null) {
+            httpStatus = HttpStatus.valueOf(e.getStatus());
+        }
+        return new ResponseEntity<>(new Result(e.getStatus(), e.getMessage()), httpStatus);
     }
 
 }

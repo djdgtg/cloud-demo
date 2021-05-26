@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class PageController {
 
     @GetMapping("{path}")
-    public String page(@PathVariable String path){
+    public String page(@PathVariable String path) {
         return path;
     }
 }

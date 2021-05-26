@@ -3,7 +3,8 @@
 
 
 <!-- Mirrored from www.themeon.net/nifty/v2.3/pages-login.ftlh by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 01 Mar 2016 16:53:39 GMT -->
-<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<!-- Added by HTTrack -->
+<meta http-equiv="content-type" content="text/html;charset=UTF-8"/><!-- /Added by HTTrack -->
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -147,10 +148,10 @@
                     }
                 }
             }
-        }).on('success.field.bv', function(e, data) {
+        }).on('success.field.bv', function (e, data) {
             var $parent = data.element.parents('.form-group');
             $parent.removeClass('has-success');
-        }).on('success.form.bv', function(e) {
+        }).on('success.form.bv', function (e) {
             e.preventDefault();
             var $form = $(e.target);
             $form.data('bootstrapValidator');
@@ -166,7 +167,7 @@
             success: function (result) {
                 window.location.href = 'index';
             },
-            error:function (response){
+            error: function (response) {
                 bootbox.alert("账号或者密码不正确")
             }
         });

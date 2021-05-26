@@ -19,7 +19,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.common.exceptions.InvalidGrantException;
+import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
@@ -27,6 +29,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -51,6 +54,9 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 
     @Autowired
     private ExcelUtils excelUtils;
+
+    @Autowired
+    private TokenStore tokenStore;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -78,6 +84,9 @@ public class UserServiceImpl implements UserDetailsService, UserService {
             LambdaQueryWrapper<UserRoleEntity> wrapper = new LambdaQueryWrapper<>();
             wrapper.eq(UserRoleEntity::getUserId, userVO.getId());
             userRoleMapper.delete(wrapper);
+
+            //修改用户或者删除用户，将该用户的token删除（修改角色或者删除角色，删除拥有角色的所有用户的token）
+            removeTokenByUsername(userVO.getUsername());
         }
 
         Integer id = userVO.getId();
@@ -107,6 +116,11 @@ public class UserServiceImpl implements UserDetailsService, UserService {
             LambdaQueryWrapper<UserRoleEntity> wrapper = new LambdaQueryWrapper<>();
             wrapper.in(UserRoleEntity::getUserId, list);
             userRoleMapper.delete(wrapper);
+
+            List<UserEntity> entities = userMapper.selectBatchIds(list);
+            if (entities.size() > 0) {
+                entities.forEach(user -> removeTokenByUsername(user.getUsername()));
+            }
         }
     }
 
@@ -136,6 +150,15 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         LambdaQueryWrapper<UserEntity> wrapper = new LambdaQueryWrapper<>();
         wrapper.in(UserEntity::getId, ids);
         userMapper.update(entity, wrapper);
+    }
+
+    @Override
+    public void removeTokenByUsername(String username) {
+        Collection<OAuth2AccessToken> tokens = tokenStore.findTokensByClientIdAndUserName("client_2", username);
+        tokens.forEach(token -> {
+            tokenStore.removeAccessToken(token);
+            tokenStore.removeRefreshToken(token.getRefreshToken());
+        });
     }
 
 }

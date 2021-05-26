@@ -30,8 +30,8 @@ public class LocalDateConverter implements Converter<LocalDate> {
 
     @Override
     public LocalDate convertToJavaData(CellData cellData, ExcelContentProperty excelContentProperty, GlobalConfiguration globalConfiguration) {
-        LocalDate localDate = LocalDate.of(1900,1,1);
-        return localDate.plusDays(cellData.getNumberValue().intValue()-2);
+        LocalDate localDate = LocalDate.of(1900, 1, 1);
+        return localDate.plusDays(cellData.getNumberValue().intValue() - 2);
     }
 
     @Override

@@ -55,8 +55,8 @@ window.onload = function () {
                 document.getElementsByClassName("top")[0].innerHTML += yourHtml;
                 let scrollDiv = document.getElementsByClassName('top')[0];
                 scrollDiv.scrollTop = scrollDiv.scrollHeight;
-            } else if(type == 1){
-                $("#count").html("Chatroom, online count: "+obj.count);
+            } else if (type == 1) {
+                $("#count").html("Chatroom, online count: " + obj.count);
             }
         }
     }

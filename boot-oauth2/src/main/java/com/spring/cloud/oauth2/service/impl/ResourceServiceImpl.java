@@ -35,7 +35,7 @@ public class ResourceServiceImpl implements ResourceService {
     @Transactional(rollbackFor = RuntimeException.class)
     public void save(ResourceVO resourceVO) {
         if (resourceVO.getId() == null) {
-             resourceMapper.insert(resourceVO);
+            resourceMapper.insert(resourceVO);
         } else {
             resourceMapper.updateById(resourceVO);
 

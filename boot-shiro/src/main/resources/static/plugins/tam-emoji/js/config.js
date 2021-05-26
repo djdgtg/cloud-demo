@@ -1,36 +1,30 @@
 'use strict';
 
 //ConfigStorage
-(function(window)
-{
+(function (window) {
     var keyPrefix = '';
     var noPrefix = false;
     var cache = {};
     var useCs = !!(window.chrome && chrome.storage && chrome.storage.local);
     var useLs = !useCs && !!window.localStorage;
 
-    function storageSetPrefix(newPrefix)
-    {
+    function storageSetPrefix(newPrefix) {
         keyPrefix = newPrefix;
     }
 
-    function storageSetNoPrefix()
-    {
+    function storageSetNoPrefix() {
         noPrefix = true;
     }
 
-    function storageGetPrefix()
-    {
-        if (noPrefix)
-        {
+    function storageGetPrefix() {
+        if (noPrefix) {
             noPrefix = false;
             return '';
         }
         return keyPrefix;
     }
 
-    function storageGetValue()
-    {
+    function storageGetValue() {
         var keys = Array.prototype.slice.call(arguments),
             callback = keys.pop(),
             result = [],
@@ -40,54 +34,37 @@
             prefix = storageGetPrefix(),
             i, key;
 
-        for (i = 0; i < keys.length; i++)
-        {
+        for (i = 0; i < keys.length; i++) {
             key = keys[i] = prefix + keys[i];
-            if (key.substr(0, 3) != 'xt_' && cache[key] !== undefined)
-            {
+            if (key.substr(0, 3) != 'xt_' && cache[key] !== undefined) {
                 result.push(cache[key]);
-            }
-            else if (useLs)
-            {
-                try
-                {
+            } else if (useLs) {
+                try {
                     value = localStorage.getItem(key);
-                }
-                catch (e)
-                {
+                } catch (e) {
                     useLs = false;
                 }
-                try
-                {
+                try {
                     value = (value === undefined || value === null) ? false : JSON.parse(value);
-                }
-                catch (e)
-                {
+                } catch (e) {
                     value = false;
                 }
                 result.push(cache[key] = value);
-            }
-            else if (!useCs)
-            {
+            } else if (!useCs) {
                 result.push(cache[key] = false);
-            }
-            else
-            {
+            } else {
                 allFound = false;
             }
         }
 
-        if (allFound)
-        {
+        if (allFound) {
             return callback(single ? result[0] : result);
         }
 
-        chrome.storage.local.get(keys, function(resultObj)
-        {
+        chrome.storage.local.get(keys, function (resultObj) {
             var value;
             result = [];
-            for (i = 0; i < keys.length; i++)
-            {
+            for (i = 0; i < keys.length; i++) {
                 key = keys[i];
                 value = resultObj[key];
                 value = value === undefined || value === null ? false : JSON.parse(value);
@@ -98,42 +75,31 @@
         });
     };
 
-    function storageSetValue(obj, callback)
-    {
+    function storageSetValue(obj, callback) {
         var keyValues = {},
             prefix = storageGetPrefix(),
             key, value;
 
-        for (key in obj)
-        {
-            if (obj.hasOwnProperty(key))
-            {
+        for (key in obj) {
+            if (obj.hasOwnProperty(key)) {
                 value = obj[key];
                 key = prefix + key;
                 cache[key] = value;
                 value = JSON.stringify(value);
-                if (useLs)
-                {
-                    try
-                    {
+                if (useLs) {
+                    try {
                         localStorage.setItem(key, value);
-                    }
-                    catch (e)
-                    {
+                    } catch (e) {
                         useLs = false;
                     }
-                }
-                else
-                {
+                } else {
                     keyValues[key] = value;
                 }
             }
         }
 
-        if (useLs || !useCs)
-        {
-            if (callback)
-            {
+        if (useLs || !useCs) {
+            if (callback) {
                 callback();
             }
             return;
@@ -142,39 +108,29 @@
         chrome.storage.local.set(keyValues, callback);
     };
 
-    function storageRemoveValue()
-    {
+    function storageRemoveValue() {
         var keys = Array.prototype.slice.call(arguments),
             prefix = storageGetPrefix(),
             i, key, callback;
 
-        if (typeof keys[keys.length - 1] === 'function')
-        {
+        if (typeof keys[keys.length - 1] === 'function') {
             callback = keys.pop();
         }
 
-        for (i = 0; i < keys.length; i++)
-        {
+        for (i = 0; i < keys.length; i++) {
             key = keys[i] = prefix + keys[i];
             delete cache[key];
-            if (useLs)
-            {
-                try
-                {
+            if (useLs) {
+                try {
                     localStorage.removeItem(key);
-                }
-                catch (e)
-                {
+                } catch (e) {
                     useLs = false;
                 }
             }
         }
-        if (useCs)
-        {
+        if (useCs) {
             chrome.storage.local.remove(keys, callback);
-        }
-        else if (callback)
-        {
+        } else if (callback) {
             callback();
         }
     };
@@ -1044,7 +1000,6 @@ Config.EmojiCategories = [
     ["1f3e0", "1f3e1", "1f3eb", "1f3e2", "1f3e3", "1f3e5", "1f3e6", "1f3ea", "1f3e9", "1f3e8", "1f492", "26ea", "1f3ec", "1f3e4", "1f307", "1f306", "1f3ef", "1f3f0", "26fa", "1f3ed", "1f5fc", "1f5fe", "1f5fb", "1f304", "1f305", "1f303", "1f5fd", "1f309", "1f3a0", "1f3a1", "26f2", "1f3a2", "1f6a2", "26f5", "1f6a4", "1f6a3", "2693", "1f680", "2708", "1f4ba", "1f681", "1f682", "1f68a", "1f689", "1f69e", "1f686", "1f684", "1f685", "1f688", "1f687", "1f69d", "1f683", "1f68b", "1f68e", "1f68c", "1f68d", "1f699", "1f698", "1f697", "1f695", "1f696", "1f69b", "1f69a", "1f6a8", "1f693", "1f694", "1f692", "1f691", "1f690", "1f6b2", "1f6a1", "1f69f", "1f6a0", "1f69c", "1f488", "1f68f", "1f3ab", "1f6a6", "1f6a5", "26a0", "1f6a7", "1f530", "26fd", "1f3ee", "1f3b0", "2668", "1f5ff", "1f3aa", "1f3ad", "1f4cd", "1f6a9", "1f1ef-1f1f5", "1f1f0-1f1f7", "1f1e9-1f1ea", "1f1e8-1f1f3", "1f1fa-1f1f8", "1f1eb-1f1f7", "1f1ea-1f1f8", "1f1ee-1f1f9", "1f1f7-1f1fa", "1f1ec-1f1e7"],
     ["0031", "0032", "0033", "0034", "0035", "0036", "0037", "0038", "0039", "0030", "1f51f", "1f522", "0023", "1f523", "2b06", "2b07", "2b05", "27a1", "1f520", "1f521", "1f524", "2197", "2196", "2198", "2199", "2194", "2195", "1f504", "25c0", "25b6", "1f53c", "1f53d", "21a9", "21aa", "2139", "23ea", "23e9", "23eb", "23ec", "2935", "2934", "1f197", "1f500", "1f501", "1f502", "1f195", "1f199", "1f192", "1f193", "1f196", "1f4f6", "1f3a6", "1f201", "1f22f", "1f233", "1f235", "1f234", "1f232", "1f250", "1f239", "1f23a", "1f236", "1f21a", "1f6bb", "1f6b9", "1f6ba", "1f6bc", "1f6be", "1f6b0", "1f6ae", "1f17f", "267f", "1f6ad", "1f237", "1f238", "1f202", "24c2", "1f6c2", "1f6c4", "1f6c5", "1f6c3", "1f251", "3299", "3297", "1f191", "1f198", "1f194", "1f6ab", "1f51e", "1f4f5", "1f6af", "1f6b1", "1f6b3", "1f6b7", "1f6b8", "26d4", "2733", "2747", "274e", "2705", "2734", "1f49f", "1f19a", "1f4f3", "1f4f4", "1f170", "1f171", "1f18e", "1f17e", "1f4a0", "27bf", "267b", "2648", "2649", "264a", "264b", "264c", "264d", "264e", "264f", "2650", "2651", "2652", "2653", "26ce", "1f52f", "1f3e7", "1f4b9", "1f4b2", "1f4b1", "00a9", "00ae", "2122", "274c", "203c", "2049", "2757", "2753", "2755", "2754", "2b55", "1f51d", "1f51a", "1f519", "1f51b", "1f51c", "1f503", "1f55b", "1f567", "1f550", "1f55c", "1f551", "1f55d", "1f552", "1f55e", "1f553", "1f55f", "1f554", "1f560", "1f555", "1f556", "1f557", "1f558", "1f559", "1f55a", "1f561", "1f562", "1f563", "1f564", "1f565", "1f566", "2716", "2795", "2796", "2797", "2660", "2665", "2663", "2666", "1f4ae", "1f4af", "2714", "2611", "1f518", "1f517", "27b0", "3030", "303d", "1f531", "25fc", "25fb", "25fe", "25fd", "25aa", "25ab", "1f53a", "1f532", "1f533", "26ab", "26aa", "1f534", "1f535", "1f53b", "2b1c", "2b1b", "1f536", "1f537", "1f538", "1f539"]
 ];
-
 
 
 Config.EmojiCategorySpritesheetDimens = [
@@ -3651,8 +3606,7 @@ Config.mapcolon = {};
 var a = [];
 Config.reversemap = {};
 
-Config.init_emoticons = function()
-{
+Config.init_emoticons = function () {
     if (Config.inits.emoticons)
         return;
     Config.init_colons(); // we require this for the emoticons map
@@ -3660,8 +3614,7 @@ Config.init_emoticons = function()
 
     var a = [];
     Config.map.emoticons = {};
-    for (var i in Config.emoticons_data)
-    {
+    for (var i in Config.emoticons_data) {
         // because we never see some characters in our text except as
         // entities, we must do some replacing
         var emoticon = i.replace(/\&/g, '&amp;').replace(/\</g, '&lt;')
@@ -3676,23 +3629,19 @@ Config.init_emoticons = function()
     Config.rx_emoticons = new RegExp(
         ('(^|\\s)(' + a.join('|') + ')(?=$|[\\s|\\?\\.,!])'), 'g');
 };
-Config.init_colons = function()
-{
+Config.init_colons = function () {
     if (Config.inits.colons)
         return;
     Config.inits.colons = 1;
     Config.rx_colons = new RegExp('\:[^\\s:]+\:', 'g');
     Config.map.colons = {};
-    for (var i in Config.data)
-    {
-        for (var j = 0; j < Config.data[i][3].length; j++)
-        {
+    for (var i in Config.data) {
+        for (var j = 0; j < Config.data[i][3].length; j++) {
             Config.map.colons[emoji.data[i][3][j]] = i;
         }
     }
 };
-Config.init_unified = function()
-{
+Config.init_unified = function () {
     if (Config.inits.unified)
         return;
     Config.inits.unified = 1;
@@ -3701,30 +3650,26 @@ Config.init_unified = function()
 
 };
 
-Config.htmlEntities = function(str) {
+Config.htmlEntities = function (str) {
     return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;')
         .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 };
 
-Config.escape_rx = function(text)
-{
+Config.escape_rx = function (text) {
     return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
 };
 
-function buildMap()
-{
+function buildMap() {
 
-    var colons = [],codes=[];
-    for (var i in Config.emoji_data)
-    {
-        for (var j = 0; j < Config.emoji_data[i][0].length; j++)
-        {
-            colons.push(Config.escape_rx (":"+Config.emoji_data[i][3][0])+":");
+    var colons = [], codes = [];
+    for (var i in Config.emoji_data) {
+        for (var j = 0; j < Config.emoji_data[i][0].length; j++) {
+            colons.push(Config.escape_rx(":" + Config.emoji_data[i][3][0]) + ":");
             codes.push(Config.emoji_data[i][0][0]);
 
             // it is a map of {"colon smiley":"unicode char"}
             Config.map[Config.emoji_data[i][3][0]] = Config.emoji_data[i][0][0];
-            Config.mapcolon[":"+Config.emoji_data[i][3][0]+":"] = Config.emoji_data[i][0][0];
+            Config.mapcolon[":" + Config.emoji_data[i][3][0] + ":"] = Config.emoji_data[i][0][0];
             // it is a map of {"unicode char": "colon smiley"}
             Config.reversemap[Config.emoji_data[i][0][0]] = Config.emoji_data[i][3][0];
         }

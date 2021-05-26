@@ -62,7 +62,7 @@ public class LogAspect {
                 serviceName, methodName, objectMapper.writeValueAsString(params));
         Object result = joinPoint.proceed();
         log.info("Response params: {}, cost {}ms",
-                objectMapper.writeValueAsString(result),(System.currentTimeMillis()-start));
+                objectMapper.writeValueAsString(result), (System.currentTimeMillis() - start));
         return result;
     }
 

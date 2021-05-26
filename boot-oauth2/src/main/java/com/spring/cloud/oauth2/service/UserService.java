@@ -29,4 +29,5 @@ public interface UserService {
 
     void enabled(Boolean enabled, List<Integer> ids);
 
+    void removeTokenByUsername(String username);
 }

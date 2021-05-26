@@ -1,4 +1,4 @@
-package com.spring.cloud.oauth2.config;
+package com.spring.cloud.oauth2.config.resource;
 
 import com.spring.cloud.oauth2.entity.ResourceEntity;
 import com.spring.cloud.oauth2.mapper.ResourceMapper;
@@ -30,9 +30,9 @@ public class MySecurityMetadataSource implements FilterInvocationSecurityMetadat
         String url = ((FilterInvocation) object).getRequest().getRequestURI();
         String method = ((FilterInvocation) object).getRequest().getMethod();
         ResourceEntity resourceEntity = resourceMapper.getResourceEntity(method, url);
-        if(resourceEntity!=null){
+        if (resourceEntity != null) {
             List<String> authorities = resourceMapper.getAccessAuthorities(resourceEntity.getId());
-            if(!CollectionUtils.isEmpty(authorities) && !resourceEntity.getPermitAll()){
+            if (!CollectionUtils.isEmpty(authorities) && !resourceEntity.getPermitAll()) {
                 return SecurityConfig.createList(authorities.toArray(new String[0]));
             }
         }

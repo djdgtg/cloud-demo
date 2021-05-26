@@ -1,7 +1,6 @@
 package com.spring.cloud.shiro.service;
 
 
-
 import com.spring.cloud.shiro.entity.UserEntity;
 
 import java.util.Map;

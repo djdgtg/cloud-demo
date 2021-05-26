@@ -14,15 +14,15 @@ public class PageVO<T> extends Page<T> {
 
     private T query;
 
-    public PageVO(){
+    public PageVO() {
 
     }
 
-    public PageVO(T query){
+    public PageVO(T query) {
         this.query = query;
     }
 
-    public static <T> PageVO<T> pageVO(T query){
+    public static <T> PageVO<T> pageVO(T query) {
         return new PageVO<>(query);
     }
 

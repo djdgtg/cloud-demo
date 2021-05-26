@@ -20,15 +20,15 @@
     <script src="plugins/bootbox/bootbox.min.js"></script>
 
     <script>
-        function api(api){
+        function api(api) {
             $.ajax({
                 type: 'get',
                 url: "api/" + api,
                 success: function (result) {
                     bootbox.alert(result)
                 },
-                error: function (response){
-                    if(response.status === 401){
+                error: function (response) {
+                    if (response.status === 401) {
                         bootbox.alert(response.responseJSON.error)
                     }
                 }

@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * description 
- * 
- * @author qinchao 
+ * description
+ *
+ * @author qinchao
  * @date 2021/3/12 18:07
  */
 @SpringBootApplication
@@ -21,7 +21,7 @@ public class ApiApplication {
     }
 
     @GetMapping("{api}")
-    public String api(@PathVariable String api){
+    public String api(@PathVariable String api) {
         return api;
     }
 

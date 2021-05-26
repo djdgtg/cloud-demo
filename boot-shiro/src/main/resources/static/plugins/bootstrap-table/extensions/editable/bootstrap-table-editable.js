@@ -3,13 +3,15 @@
  * extensions: https://github.com/vitalets/x-editable
  */
 
-!function($) {
+!function ($) {
 
     'use strict';
 
     $.extend($.fn.bootstrapTable.defaults, {
         editable: true,
-        onEditableInit: function () {return false;}
+        onEditableInit: function () {
+            return false;
+        }
     });
 
     $.extend($.fn.bootstrapTable.Constructor.EVENTS, {
@@ -61,11 +63,11 @@
 
             that.$body.find('a[data-name="' + column.field + '"]').editable(column.editable)
                 .off('save').on('save', function (e, params) {
-                    var data = that.getData(),
-                        row = data[$(this).parents('tr[data-index]').data('index')];
+                var data = that.getData(),
+                    row = data[$(this).parents('tr[data-index]').data('index')];
 
-                    row[column.field] = params.submitValue;
-                });
+                row[column.field] = params.submitValue;
+            });
         });
         this.trigger('editable-init');
     };

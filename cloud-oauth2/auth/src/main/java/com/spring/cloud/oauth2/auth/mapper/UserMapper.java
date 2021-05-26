@@ -15,11 +15,11 @@ public interface UserMapper extends BaseMapper<UserEntity> {
 
     /**
      * Description 根据用户id获取其权限
-     * 
-     * @param userId 
-     * @author qinchao 
-     * @date 2021/4/22 15:20
+     *
+     * @param userId
      * @return java.util.List<java.lang.String>
+     * @author qinchao
+     * @date 2021/4/22 15:20
      */
     List<String> getUserAuthorities(Integer userId);
 }

@@ -22,7 +22,7 @@ public interface UserMapper extends BaseMapper<UserEntity> {
 
     Page<UserVO> getPage(PageVO<UserVO> pageVO);
 
-    List<UserVO> getList(Map<String,Object> query);
+    List<UserVO> getList(Map<String, Object> query);
 
     void importBatch(List<UserImportVO> list);
 
