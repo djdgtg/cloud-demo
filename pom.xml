@@ -9,6 +9,7 @@
         <module>common-web</module>
         <module>boot-shiro</module>
         <module>security-oauth2</module>
+        <module>sharding-jdbc</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

@@ -1,0 +1,36 @@
+server:
+  port: 87
+
+spring:
+  application:
+    name: sharding-jdbc
+  shardingsphere:
+    datasource:
+      names: er1
+      er1:
+        type: com.zaxxer.hikari.HikariDataSource
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        jdbc-url: jdbc:mysql://localhost:3306/cloud-demo?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8
+        username: root
+        password: root
+    sharding:
+      tables:
+        exam_record:
+          actual-data-nodes: er1.exam_record_$->{1..2}
+          key-generator:
+            column: id
+            type: SNOWFLAKE
+          table-strategy:
+            inline:
+              sharding-column: id
+              algorithm-expression: exam_record_$->{id % 2 + 1}
+    props:
+      sql:
+        show: true
+
+
+logging:
+  level:
+    root: info
+    com.spring.cloud.sharding.mapper: debug
+
